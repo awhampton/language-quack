@@ -1,0 +1,1433 @@
+'name': 'Quack'
+
+'scopeName': 'source.quack'
+
+'fileTypes': [
+  'qk'
+]
+
+'patterns': [
+  {
+    'include': '#line_comments'
+  }
+    {
+      'include': '#block_comments'
+    }
+
+  {
+    'match': '\\b([1-9]+[0-9]*|0)'
+    'name': 'constant.numeric.integer.decimal.quack'
+  }
+
+  {
+    'comment': 'keywords that delimit flow conditionals'
+    'name': 'keyword.control.conditional.quack'
+    'match': '\\b(if|elif|else)\\b'
+  }
+
+  {
+    'comment': 'keywords that delimit loops'
+    'name': 'keyword.control.repeat.quack'
+    'match': '\\b(while)\\b'
+  }
+
+  {
+    'comment': 'keywords that alter flow from within a block'
+    'name': 'keyword.control.statement.quack'
+    'match': '\\b(return)\\b'
+  }
+
+  {
+    'comment': 'keyword operators that evaluate to True or False'
+    'match': '\\b(and|not|or)\\b'
+    'name': 'keyword.operator.logical.quack'
+  }
+
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other.quack'
+    'comment': 'keywords that haven\'t fit into other groups (yet).'
+    'match': '\\b(;)\\b'
+  }
+
+  {
+    'match': '<\\=|>\\=|\\=\\=|<|>'
+    'name': 'keyword.operator.comparison.quack'
+  }
+
+  {
+    'match': '\\+|\\-|\\*|/'
+    'name': 'keyword.operator.arithmetic.quack'
+  }
+
+  {
+    'match': '\\='
+    'name': 'keyword.operator.assignment.quack'
+  }
+
+  {
+    'begin': '^\\s*(class)\\s+(?=[a-zA-Z_][a-zA-Z_0-9]*\\s*\\()'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.class.quack'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.inheritance.end.quack'
+      '2':
+        'name': 'punctuation.section.class.begin.quack'
+      '3':
+        'name': 'invalid.illegal.missing-section-begin.quack'
+    'name': 'meta.class.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'contentName': 'entity.name.type.class.quack'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#entity_name_class'
+          }
+        ]
+      }
+      {
+        'begin': '(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.inheritance.begin.quack'
+        'contentName': 'meta.class.inheritance.quack'
+        'end': '(?=\\)|:)'
+        'patterns': [
+          {
+            'begin': '(?<=\\(|,)\\s*'
+            'contentName': 'entity.other.inherited-class.quack'
+            'end': '\\s*(?:(,)|(?=\\)))'
+            'endCaptures':
+              '1':
+                'name': 'punctuation.separator.inheritance.quack'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '^\\s*(class)\\s+(?=[a-zA-Z_][a-zA-Z_0-9])'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.class.quack'
+    'end': '(\\()|(\\s*$\\n?|#.*$\\n?)'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.inheritance.begin.quack'
+      '2':
+        'name': 'invalid.illegal.missing-inheritance.quack'
+    'name': 'meta.class.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'contentName': 'entity.name.type.class.quack'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#entity_name_function'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '^\\s*(def)\\s+(?=[A-Za-z_][A-Za-z0-9_]*\\s*\\()'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.function.quack'
+    'end': '(\\))\\s*(?:(\\:)|(.*$\\n?))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.end.quack'
+      '2':
+        'name': 'punctuation.section.function.begin.quack'
+      '3':
+        'name': 'invalid.illegal.missing-section-begin.quack'
+    'name': 'meta.function.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'contentName': 'entity.name.function.quack'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#entity_name_function'
+          }
+        ]
+      }
+      {
+        'begin': '(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.parameters.begin.quack'
+        'contentName': 'meta.function.parameters.quack'
+        'end': '(?=\\)\\s*\\:)'
+        'patterns': [
+          {
+            'include': '#line_comments'
+          }
+            {
+              'include': '#block_comments'
+            }
+          {
+            'include': '#keyword_arguments'
+          }
+          {
+            'captures':
+              '1':
+                'name': 'variable.parameter.function.quack'
+              '2':
+                'name': 'punctuation.separator.parameters.quack'
+            'match': '\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(?:(,)|(?=[\\n\\)]))'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '^\\s*(def)\\s+(?=[A-Za-z_][A-Za-z0-9_]*)'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.function.quack'
+    'end': '(\\()|\\s*($\\n?|#.*$\\n?)'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.parameters.begin.quack'
+      '2':
+        'name': 'invalid.illegal.missing-parameters.quack'
+    'name': 'meta.function.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'contentName': 'entity.name.function.quack'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#entity_name_function'
+          }
+        ]
+      }
+    ]
+  }
+
+
+  {
+    'begin': '(?<=\\)|\\])\\s*(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.begin.quack'
+    'contentName': 'meta.function-call.arguments.quack'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.quack'
+    'name': 'meta.function-call.quack'
+    'patterns': [
+      {
+        'include': '#keyword_arguments'
+      }
+      {
+        'include': '$self'
+      }
+    ]
+  }
+  {
+    'begin': '(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\()'
+    'end': '(\\))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.quack'
+    'name': 'meta.function-call.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*\\s*\\()'
+        'end': '(?=\\s*\\()'
+        'patterns': [
+          {
+            'include': '#dotted_name'
+          }
+        ]
+      }
+      {
+        'begin': '(\\()'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.arguments.begin.quack'
+        'contentName': 'meta.function-call.arguments.quack'
+        'end': '(?=\\))'
+        'patterns': [
+          {
+            'include': '#keyword_arguments'
+          }
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[a-zA-Z_][a-zA-Z_0-9]*)*\\s*\\[)'
+    'end': '(\\])'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.quack'
+    'name': 'meta.item-access.quack'
+    'patterns': [
+      {
+        'begin': '(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*\\s*\\[)'
+        'end': '(?=\\s*\\[)'
+        'patterns': [
+          {
+            'include': '#dotted_name'
+          }
+        ]
+      }
+      {
+        'begin': '(\\[)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.arguments.begin.quack'
+        'contentName': 'meta.item-access.arguments.quack'
+        'end': '(?=\\])'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '(?<=\\)|\\])\\s+(\\[)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.begin.quack'
+    'contentName': 'meta.item-access.arguments.quack'
+    'end': '(\\])'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.arguments.end.quack'
+    'name': 'meta.item-access.quack'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
+  }
+  {
+    'captures':
+      '1':
+        'name': 'storage.type.function.quack'
+    'match': '\\b(def|lambda)\\b'
+  }
+    {
+    'captures':
+      '1':
+        'name': 'storage.type.class.quack'
+    'match': '\\b(class)\\b'
+    }
+    {
+      'captures':
+        '1':
+          'name': 'storage.type.class.quack'
+      'match': '\\b(extends)\\b'
+    }
+  {
+    'include': '#line_continuation'
+  }
+  {
+    'match': '\\b(None|True|False|Ellipsis|NotImplemented)\\b'
+    'name': 'constant.language.quack'
+  }
+  {
+    'include': '#string_quoted_single'
+  }
+  {
+    'include': '#string_quoted_double'
+  }
+  {
+    'include': '#dotted_name'
+  }
+  {
+    'include': '#language_variables'
+  }
+  {
+    'begin': '(\\()'
+    'end': '(\\))'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
+  }
+  {
+    'captures':
+      '1':
+        'name': 'punctuation.definition.list.begin.quack'
+      '2':
+        'name': 'meta.empty-list.quack'
+      '3':
+        'name': 'punctuation.definition.list.end.quack'
+    'match': '(\\[)(\\s*(\\]))\\b'
+  }
+  {
+    'begin': '(\\[)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.list.begin.quack'
+    'end': '(\\])'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.list.end.quack'
+    'name': 'meta.structure.list.quack'
+    'patterns': [
+      {
+        'begin': '(?<=\\[|\\,)\\s*(?![\\],])'
+        'contentName': 'meta.structure.list.item.quack'
+        'end': '\\s*(?:(,)|(?=\\]))'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.separator.list.quack'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'captures':
+      '1':
+        'name': 'punctuation.definition.tuple.begin.quack'
+      '2':
+        'name': 'meta.empty-tuple.quack'
+      '3':
+        'name': 'punctuation.definition.tuple.end.quack'
+    'match': '(\\()(\\s*(\\)))'
+    'name': 'meta.structure.tuple.quack'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'punctuation.definition.dictionary.begin.quack'
+      '2':
+        'name': 'meta.empty-dictionary.quack'
+      '3':
+        'name': 'punctuation.definition.dictionary.end.quack'
+    'match': '(\\{)(\\s*(\\}))'
+    'name': 'meta.structure.dictionary.quack'
+  }
+  {
+    'begin': '(\\{)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.definition.dictionary.begin.quack'
+    'end': '(\\})'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.dictionary.end.quack'
+    'name': 'meta.structure.dictionary.quack'
+    'patterns': [
+      {
+        'begin': '(?<=\\{|\\,|^)\\s*(?![\\},])'
+        'contentName': 'meta.structure.dictionary.key.quack'
+        'end': '\\s*(?:(?=\\})|(\\:))'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.separator.valuepair.dictionary.quack'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+      {
+        'begin': '(?<=\\:|^)\\s*'
+        'contentName': 'meta.structure.dictionary.value.quack'
+        'end': '\\s*(?:(?=\\})|(,))'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.separator.dictionary.quack'
+        'patterns': [
+          {
+            'include': '$self'
+          }
+        ]
+      }
+    ]
+  }
+]
+
+
+
+'repository':
+  'builtin_functions':
+    'match': '(?x)\\b(EQUAL|EQUALS|PRINT|STR|PLUS|LESS|MORE|ATMOST|ATLEAST)\\b'
+    'name': 'support.function.builtin.quack'
+  'builtin_types':
+    'match': '(?x)\\b(\n\t\t\t\tbasestring|Boolean|Int|String|Obj|Nothing\n\t\t\t)\\b'
+    'name': 'support.type.quack'
+  'constant_placeholder':
+    'match': '(?i:(%(\\([a-z_]+\\))?#?0?\\-?[ ]?\\+?([0-9]*|\\*)(\\.([0-9]*|\\*))?([hL][a-z]|[a-z%]))|(\\{([!\\[\\].:\\w ]+)?\\}))'
+    'name': 'constant.other.placeholder.quack'
+
+  'line_comments':
+    'begin': '(^[ \\t]+)?(?=//)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.whitespace.comment.leading.quack'
+    'end': '(?!\\G)'
+    'patterns': [
+      {
+        'begin': '//'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.quack'
+        'end': '\\n'
+        'name': 'comment.line.number-sign.quack'
+      }
+    ]
+
+  'block_comments':
+    'begin': '(^[ \\t]+)?(?=/\\*)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.whitespace.comment.leading.quack'
+    'end': '(?!\\G)'
+    'patterns': [
+      {
+        'begin': '/\\*'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.quack'
+        'end': '\\*/'
+        'name': 'comment.line.number-sign.quack'
+      }
+    ]
+
+  'dotted_name':
+    'begin': '(?=[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)'
+    'end': '(?![A-Za-z0-9_\\.])'
+    'patterns': [
+      {
+        'begin': '(\\.)(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#magic_function_names'
+          }
+          {
+            'include': '#magic_variable_names'
+          }
+          {
+            'include': '#illegal_names'
+          }
+          {
+            'include': '#generic_names'
+          }
+        ]
+      }
+      {
+        'begin': '(?<!\\.)(?=[A-Za-z_][A-Za-z0-9_]*)'
+        'end': '(?![A-Za-z0-9_])'
+        'patterns': [
+          {
+            'include': '#builtin_functions'
+          }
+          {
+            'include': '#builtin_types'
+          }
+          {
+            'include': '#illegal_names'
+          }
+          {
+            'include': '#magic_function_names'
+          }
+          {
+            'include': '#magic_variable_names'
+          }
+          {
+            'include': '#language_variables'
+          }
+          {
+            'include': '#generic_names'
+          }
+        ]
+      }
+    ]
+  'entity_name_class':
+    'patterns': [
+      {
+        'include': '#illegal_names'
+      }
+      {
+        'include': '#generic_names'
+      }
+    ]
+  'entity_name_function':
+    'patterns': [
+      {
+        'include': '#magic_function_names'
+      }
+      {
+        'include': '#illegal_names'
+      }
+      {
+        'include': '#generic_names'
+      }
+    ]
+  'escaped_char':
+    'captures':
+      '1':
+        'name': 'constant.character.escape.hex.quack'
+      '2':
+        'name': 'constant.character.escape.octal.quack'
+      '3':
+        'name': 'constant.character.escape.newline.quack'
+      '4':
+        'name': 'constant.character.escape.backlash.quack'
+      '5':
+        'name': 'constant.character.escape.double-quote.quack'
+      '6':
+        'name': 'constant.character.escape.single-quote.quack'
+      '7':
+        'name': 'constant.character.escape.bell.quack'
+      '8':
+        'name': 'constant.character.escape.backspace.quack'
+      '9':
+        'name': 'constant.character.escape.formfeed.quack'
+      '10':
+        'name': 'constant.character.escape.linefeed.quack'
+      '11':
+        'name': 'constant.character.escape.return.quack'
+      '12':
+        'name': 'constant.character.escape.tab.quack'
+      '13':
+        'name': 'constant.character.escape.vertical-tab.quack'
+    'match': '(\\\\x[0-9A-F]{2})|(\\\\[0-7]{3})|(\\\\\\n)|(\\\\\\\\)|(\\\\\\")|(\\\\\')|(\\\\a)|(\\\\b)|(\\\\f)|(\\\\n)|(\\\\r)|(\\\\t)|(\\\\v)'
+  'escaped_unicode_char':
+    'captures':
+      '1':
+        'name': 'constant.character.escape.unicode.16-bit-hex.quack'
+      '2':
+        'name': 'constant.character.escape.unicode.32-bit-hex.quack'
+      '3':
+        'name': 'constant.character.escape.unicode.name.quack'
+    'match': '(\\\\U[0-9A-Fa-f]{8})|(\\\\u[0-9A-Fa-f]{4})|(\\\\N\\{[a-zA-Z ]+\\})'
+  'function_name':
+    'patterns': [
+      {
+        'include': '#magic_function_names'
+      }
+      {
+        'include': '#magic_variable_names'
+      }
+      {
+        'include': '#builtin_exceptions'
+      }
+      {
+        'include': '#builtin_functions'
+      }
+      {
+        'include': '#builtin_types'
+      }
+      {
+        'include': '#generic_names'
+      }
+    ]
+  'generic_names':
+    'match': '[A-Za-z_][A-Za-z0-9_]*'
+  'illegal_names':
+    'match': '\\b(and|class|def|elif|else|extends|if|not|or|return|while)\\b'
+    'name': 'invalid.illegal.name.quack'
+  'keyword_arguments':
+    'begin': '\\b([a-zA-Z_][a-zA-Z_0-9]*)\\s*(=)(?!=)'
+    'beginCaptures':
+      '1':
+        'name': 'variable.parameter.function.quack'
+      '2':
+        'name': 'keyword.operator.assignment.quack'
+    'end': '\\s*(?:(,)|(?=$\\n?|[\\)\\:]))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.separator.parameters.quack'
+    'patterns': [
+      {
+        'include': '$self'
+      }
+    ]
+  'language_variables':
+    'match': '\\b(this|cls)\\b'
+    'name': 'variable.language.this.quack'
+  'line_continuation':
+    'captures':
+      '1':
+        'name': 'punctuation.separator.continuation.line.quack'
+      '2':
+        'name': 'invalid.illegal.unexpected-text.quack'
+    'match': '(\\\\)(.*)$\\n?'
+  'magic_function_names':
+    'comment': 'these methods have magic interpretation by quack and are generally called indirectly through syntactic constructs'
+    'match': '(?x)\\b(__(?:abs|add|and|bool|bytes|call|cmp|coerce|complex|contains|del|delattr|delete|delitem|delslice|dir|div|divmod|enter|eq|exit|float|floordiv|format|ge|get|getattr|getattribute|getitem|getslice|gt|hash|hex|iadd|iand|idiv|ifloordiv|ilshift|imatmul|imod|imul|index|init|instancecheck|int|invert|ior|ipow|irshift|isub|iter|itruediv|ixor|le|len|length_hint|long|lshift|lt|matmul|missing|mod|mul|ne|neg|next|new|nonzero|oct|or|pos|pow|radd|rand|rdiv|rdivmod|repr|reversed|rfloordiv|rlshift|rmatmul|rmod|rmul|ror|round|rpow|rrshift|rshift|rsub|rtruediv|rxor|set|setattr|setitem|setslice|str|sub|subclasscheck|truediv|unicode|xor)__)\\b'
+    'name': 'support.function.magic.quack'
+  'magic_variable_names':
+    'comment': 'magic variables which a class/module may have.'
+    'match': '\\b__(class|closure|code|debug|dict|doc|file|func|globals|kwdefaults|members|metaclass|methods|module|name|qualname|this|slots|weakref)__\\b'
+    'name': 'support.variable.magic.quack'
+  'regular_expressions':
+    'comment': 'Changed disabled to 1 to turn off syntax highlighting in “r” strings.'
+    'disabled': 0
+    'patterns': [
+      {
+        'include': 'source.regexp.quack'
+      }
+    ]
+  'string_quoted_double':
+    'patterns': [
+      {
+        'begin': '([uU]r)(""")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode-raw string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.unicode-raw-regex.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': '#regular_expressions'
+          }
+        ]
+      }
+      {
+        'begin': '([uU]R)(""")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode-raw string without regular expression highlighting'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.unicode-raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(r)(""")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted raw string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.raw-regex.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': '#regular_expressions'
+          }
+        ]
+      }
+      {
+        'begin': '(R)(""")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted raw string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '([uU])(""")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted unicode string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.unicode.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'captures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+          '3':
+            'patterns': [
+              {'include': '#constant_placeholder'}
+              {'include': '#escaped_unicode_char'}
+              {'include': '#escaped_char'}
+              {'include': '#regular_expressions'}
+            ]
+          '4':
+            'name': 'punctuation.definition.string.end.quack'
+        'comment': 'double-quoted raw string'
+        'match': '([uU]r)(")((?:[^"\\\\]|\\\\.)*)(")'
+        'name': 'string.quoted.double.single-line.unicode-raw-regex.quack'
+      }
+      {
+        'begin': '([uU]R)(")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double-quoted raw string'
+        'end': '((?<=")(")|")|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+          '3':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.double.single-line.unicode-raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'captures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+          '3':
+            'patterns': [
+              {'include': '#constant_placeholder'}
+              {'include': '#escaped_char'}
+              {'include': '#regular_expressions'}
+            ]
+          '4':
+            'name': 'punctuation.definition.string.end.quack'
+        'comment': 'double-quoted raw string'
+        'match': '(r)(")((?:[^"\\\\]|\\\\.)*)(")'
+        'name': 'string.quoted.double.single-line.raw-regex.quack'
+      }
+      {
+        'begin': '(R)(")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double-quoted raw string'
+        'end': '((?<=")(")|")|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+          '3':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.double.single-line.raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '([uU])(")'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted unicode string'
+        'end': '((?<=")(")|")|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+          '3':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.double.single-line.unicode.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(""")'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.sql.quack'
+        'patterns': [
+          {
+             'begin': '(?=\\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH))'
+             'end': '(?=\\s*""")'
+             'patterns': [
+                {
+                  'include': 'source.sql'
+                }
+             ]
+          }
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(")(?=\\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH))'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted string'
+        'end': '((?<=")(")|")|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+          '3':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.double.single-line.sql.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': 'source.sql'
+          }
+        ]
+      }
+      {
+        'begin': '(""")'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted string'
+        'end': '((?<=""")(")""|""")'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+        'name': 'string.quoted.double.block.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(")'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'double quoted string'
+        'end': '((?<=")(")|")|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.double.quack'
+          '3':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.double.single-line.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+    ]
+  'string_quoted_single':
+    'patterns': [
+      {
+        'captures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+          '2':
+            'name': 'punctuation.definition.string.end.quack'
+          '3':
+            'name': 'meta.empty-string.single.quack'
+        'match': '(?<!\')(\')((\'))(?!\')'
+        'name': 'string.quoted.single.single-line.quack'
+      }
+      {
+        'begin': '([uU]r)(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode-raw string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.unicode-raw-regex.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': '#regular_expressions'
+          }
+        ]
+      }
+      {
+        'begin': '([uU]R)(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode-raw string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.unicode-raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(r)(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted raw string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.raw-regex.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': '#regular_expressions'
+          }
+        ]
+      }
+      {
+        'begin': '(R)(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted raw string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '([uU])(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.unicode.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'captures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+          '3':
+            'patterns': [
+              {'include': '#constant_placeholder'}
+              {'include': '#escaped_unicode_char'}
+              {'include': '#escaped_char'}
+              {'include': '#regular_expressions'}
+            ]
+          '4':
+            'name': 'punctuation.definition.string.end.quack'
+        'comment': 'single quoted raw string'
+        'match': '([uU]r)(\')((?:[^\'\\\\]|\\\\.)*)(\')'
+        'name': 'string.quoted.single.single-line.unicode-raw-regex.quack'
+      }
+      {
+        'begin': '([uU]R)(\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted raw string'
+        'end': '(\')|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.single.single-line.unicode-raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'captures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+          '3':
+            'patterns': [
+              {'include': '#constant_placeholder'}
+              {'include': '#escaped_char'}
+              {'include': '#regular_expressions'}
+            ]
+          '4':
+            'name': 'punctuation.definition.string.end.quack'
+        'comment': 'single quoted raw string'
+        'match': '(r)(\')((?:[^\'\\\\]|\\\\.)*)(\')'
+        'name': 'string.quoted.single.single-line.raw-regex.quack'
+      }
+      {
+        'begin': '(R)(\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted raw string'
+        'end': '(\')|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.single.single-line.raw.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '([uU])(\')'
+        'beginCaptures':
+          '1':
+            'name': 'storage.type.string.quack'
+          '2':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted unicode string'
+        'end': '(\')|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.single.single-line.unicode.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_unicode_char'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.sql.quack'
+        'patterns': [
+          {
+             'begin': '(?=\\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH))'
+             'end': '(?=\\s*\'\'\')'
+             'patterns': [
+                {
+                  'include': 'source.sql'
+                }
+             ]
+          }
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(\')(?=\\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|REPLACE|ALTER|WITH))'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted string'
+        'end': '(\')|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.single.single-line.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+          {
+            'include': 'source.sql'
+          }
+        ]
+      }
+      {
+        'begin': '(\'\'\')'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted string'
+        'end': '((?<=\'\'\')(\')\'\'|\'\'\')'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'meta.empty-string.single.quack'
+        'name': 'string.quoted.single.block.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+      {
+        'begin': '(\')'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.definition.string.begin.quack'
+        'comment': 'single quoted string'
+        'end': '(\')|(\\n)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.definition.string.end.quack'
+          '2':
+            'name': 'invalid.illegal.unclosed-string.quack'
+        'name': 'string.quoted.single.single-line.quack'
+        'patterns': [
+          {
+            'include': '#constant_placeholder'
+          }
+          {
+            'include': '#escaped_char'
+          }
+        ]
+      }
+    ]
+  'strings':
+    'patterns': [
+      {
+        'include': '#string_quoted_double'
+      }
+      {
+        'include': '#string_quoted_single'
+      }
+    ]
